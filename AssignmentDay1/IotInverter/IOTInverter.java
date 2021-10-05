@@ -147,10 +147,7 @@ abstract class SolarInverter extends Inverter{
     private SolarPanel solarPanel;
     private boolean gridOn;
 
-   
-
-    protected SolarInverter(String model, double operatingVol, double current, double price,
-            SolarPanel solarPanel, boolean gridOn) {
+    protected SolarInverter(String model, double operatingVol, double current, double price, SolarPanel solarPanel, boolean gridOn) {
         super(model,"Solar", operatingVol, current, price);
         this.solarPanel = solarPanel;
         this.gridOn = gridOn;
@@ -179,8 +176,7 @@ abstract class SolarInverter extends Inverter{
 abstract class SimpleHomeInverter extends Inverter{
     private Battery battery;
 
-    protected SimpleHomeInverter(String model, double operatingVol, double current, double price,
-            Battery battery) {
+    protected SimpleHomeInverter(String model, double operatingVol, double current, double price, Battery battery) {
         super(model, "Electric" , operatingVol, current, price);
         this.battery = battery;
     }
@@ -225,7 +221,7 @@ class PCU extends SolarInverter{
         System.out.println("Price : "+super.getPrice());
         System.out.println("Solar Panel included : Yes");
         System.out.println("Battery Included : Yes");
-        System.out.println("Grid sys: Off");
+        System.out.println("Grid System : Off");
         System.out.println("Power Rating : "+super.getPower());
     }
 }
@@ -254,8 +250,7 @@ class Regalia extends SolarInverter{
 
     
 
-    public Regalia(String model, double operatingVol, double current, double price, SolarPanel solarPanel,
-            boolean gridOn) {
+    public Regalia(String model, double operatingVol, double current, double price, SolarPanel solarPanel,boolean gridOn) {
         super(model, operatingVol, current, price, solarPanel, gridOn);
     }
 
@@ -265,8 +260,9 @@ class Regalia extends SolarInverter{
         System.out.println("Inverter Type : "+ super.getType());
         System.out.println("Inverter OpVolt : "+ super.getOperatingVol());
         System.out.println("Inverter Current : "+ super.getCurrent());
-        System.out.println("Inverter Solar Panel : Included");
-        System.out.println("Inverter Grid : "+ super.getGrid());
+        System.out.println("Battery Included : No");
+        System.out.println("Solar Panel Included : Yes");
+        System.out.println("Grid System : Off");
         System.out.println("Inverter Power : "+ super.getPower());
     }
     
@@ -312,10 +308,10 @@ class Icruze extends SimpleHomeInverter{
 
 public class IOTInverter{
     public static void main(String[] args) {
-        Battery battery = new Battery("Battery1234", 500, 300, "Medium");
+        Battery battery = new Battery("CommercialInv3456", 500, 300, "Medium");
         battery.getDeatils();
         System.out.println();
-        SolarPanel solarPanel = new SolarPanel("Battery3456", "silicon", 400, 500);
+        SolarPanel solarPanel = new SolarPanel("InverterBattery3456", "silicon", 400, 500);
         solarPanel.getDetails();
         System.out.println();
         Inverter pcu = new PCU("Inverter637",10,200,5000,solarPanel,battery);

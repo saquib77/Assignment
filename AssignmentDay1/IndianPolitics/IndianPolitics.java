@@ -27,8 +27,14 @@ abstract class Person{
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
+
+    protected void setName(String name) {
+        this.name = name;
+    }
+
+
     public abstract void getDetails(); 
 }
 
@@ -36,7 +42,7 @@ abstract class Person{
 //Member of Parliament
 class MP extends Person{
     private int spendingLimit;
-    public MP(String name) {
+    protected MP(String name) {
         super(name);
         this.spendingLimit = 50000;
     }
@@ -45,7 +51,8 @@ class MP extends Person{
     }
     @Override
     public void getDetails() {
-        System.out.println("MP Name :"+ super.getName() +"\nSpending Limit :" + this.spendingLimit);
+        System.out.println("MP Name :"+ super.getName());
+        System.out.println("Spending Limit :" + this.spendingLimit);
     }
 }
 
@@ -72,7 +79,7 @@ class Car{
 
 //Driver Class
 class Driver extends Person{
-    public Driver(String name) {
+    protected Driver(String name) {
         super(name);
     }
     @Override
@@ -83,12 +90,25 @@ class Driver extends Person{
 
 //CarDriver Details
 class CarDriver extends Driver{
-    public CarDriver(String name) {
+    private int yearOfExperience;
+    
+    protected CarDriver(String name, int yearOfExperience) {
         super(name);
+        this.yearOfExperience = yearOfExperience;
     }
+
+    public int getYearOfExperience() {
+        return this.yearOfExperience;
+    }
+
+    protected void setYearOfExperience(int yearOfExperience) {
+        this.yearOfExperience = yearOfExperience;
+    }
+
     @Override
     public void getDetails() {
         System.out.println("Car Driver Name : "+ super.getName());
+        System.out.println("Experience : " + this.yearOfExperience);
     }
 }
 
@@ -97,7 +117,7 @@ class Constituency{
     private String name;
     private int areaInkm;
     private MP mp;
-    public Constituency(String name, int areaInkm, MP mp) {
+    protected Constituency(String name, int areaInkm, MP mp) {
         this.name = name;
         this.areaInkm = areaInkm;
         this.mp = mp;
@@ -114,7 +134,7 @@ class Minister extends MP{
     private Car car;
     private CarDriver cDriver;
     private int spendingLimit;
-    public Minister(String name, Car car, CarDriver cDriver) {
+    protected Minister(String name, Car car, CarDriver cDriver) {
         super(name);
         this.car = car;
         this.cDriver = cDriver;
@@ -156,6 +176,7 @@ class PM extends Minister{
         System.out.println("Spending Limit :" + this.spendingLimit);
         this.car.getDetails();
         this.cDriver.getDetails();
+        System.out.println();
         this.getAllCars();
     }
 }
@@ -169,7 +190,7 @@ public class IndianPolitics{
         con.getDetails();
         System.out.println();
 
-        Minister mn = new Minister("Arvind", new Car("Scorpio", "Black"), new CarDriver("Ram"));
+        Minister mn = new Minister("Arvind", new Car("Scorpio", "Black"), new CarDriver("Ram",3));
         mn.getDetails();
         System.out.println();
 
@@ -177,7 +198,7 @@ public class IndianPolitics{
         allcar.add(new Car("Merc Benz", "Black"));
         allcar.add( new Car("BMWx7", "White"));
         allcar.add(new Car("RRDark","Mate Black"));
-        PM pm = new PM("Modi", new Car("Merc Benz", "Black"), new CarDriver("Shayam"), allcar);
+        PM pm = new PM("Modi", new Car("Merc Benz", "Black"), new CarDriver("Shayam",4), allcar);
         pm.getDetails();
     }
 }
