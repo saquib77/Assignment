@@ -22,32 +22,51 @@ abstract class Inverter{
     private String type;                    // solar Inv and Non-solar Inv
     private double operatingVol;             // Inv Operating Volt 
     private double current;                 // current power of inverter
+    private double price;
 
-    protected Inverter(String model, String type, double operatingVol, double current) {
+    protected Inverter(String model, String type, double operatingVol, double current,double price) {
         this.model = model;
         this.type = type;
         this.operatingVol = operatingVol;
         this.current = current;
+        this.price = price;
     }
     public abstract void getDetails();
 
     //Getter
+    
+    public double getPower(){
+        return (current*operatingVol);
+    }
     public String getModel() {
         return this.model;
+    }
+    public void setModel(String model) {
+        this.model = model;
     }
     public String getType() {
         return this.type;
     }
-    
-    public double getOpratingVol() {
+    public void setType(String type) {
+        this.type = type;
+    }
+    public double getOperatingVol() {
         return this.operatingVol;
     }
-    
+    public void setOperatingVol(double operatingVol) {
+        this.operatingVol = operatingVol;
+    }
     public double getCurrent() {
         return this.current;
     }
-    public double getPower(){
-        return (current*operatingVol);
+    public void setCurrent(double current) {
+        this.current = current;
+    }
+    public double getPrice() {
+        return this.price;
+    }
+    public void setPrice(double price) {
+        this.price = price;
     }
     
 }
@@ -126,10 +145,13 @@ class Battery{
 //Getters 
 abstract class SolarInverter extends Inverter{
     private SolarPanel solarPanel;
-    private String gridOn;
+    private boolean gridOn;
 
-    protected SolarInverter(String model,String type,double operatingVol,double current,SolarPanel solarPanel,String gridOn){
-        super(model, type, operatingVol, current);
+   
+
+    protected SolarInverter(String model, double operatingVol, double current, double price,
+            SolarPanel solarPanel, boolean gridOn) {
+        super(model,"Solar", operatingVol, current, price);
         this.solarPanel = solarPanel;
         this.gridOn = gridOn;
     }
@@ -137,93 +159,114 @@ abstract class SolarInverter extends Inverter{
     protected SolarPanel getSolarPanel() {
         return this.solarPanel;
     }
-
-    public String getGridOn() {
+    public boolean getGrid() {
         return this.gridOn;
     }
-    public void getSolarPanelDetails(){
-        this.solarPanel.getDetails();
+
+    protected void setSolarPanel(SolarPanel solarPanel) {
+        this.solarPanel = solarPanel;
     }
-    
+    protected void setGrid(boolean gridOn) {
+        this.gridOn = gridOn;
+    }
+
 }
+
+
+
 //SimpleHome Inverter
 //SimpleHomeInverter(String model, String type, double operatingVol, double current, Battery bat)
 abstract class SimpleHomeInverter extends Inverter{
-    private Battery bat;
+    private Battery battery;
 
-    protected SimpleHomeInverter(String model, String type, double operatingVol, double current, Battery bat) {
-        super(model, type, operatingVol, current);
-        this.bat = bat;
+    protected SimpleHomeInverter(String model, double operatingVol, double current, double price,
+            Battery battery) {
+        super(model, "Electric" , operatingVol, current, price);
+        this.battery = battery;
     }
 
-    protected Battery getBattery() {
-        return this.bat;
+    protected Battery getBat() {
+        return this.battery;
+    }
+
+    protected void setBat(Battery battery) {
+        this.battery = battery;
     }
     public void getBatteryDetails(){
-        this.bat.getDeatils();
+        this.battery.getDeatils();
     }
 }
 
 
 class PCU extends SolarInverter{
-    private Battery bat;
+    private Battery battery;
 
-    public PCU(String model, String type, double operatingVol, double current, SolarPanel solarPanel, String gridOn,
-            Battery bat) {
-        super(model, type, operatingVol, current, solarPanel, "NO");
-        this.bat = bat;
+    public PCU(String model, double operatingVol, double current, double price, SolarPanel solarPanel,Battery battery) {
+        super(model, operatingVol, current, price, solarPanel, false);
+        this.battery = battery;
     }
 
-    public Battery getBat() {
-        return this.bat;
+    public Battery getBattery(){ 
+        return this.battery; 
+    } 
+       
+    public void setBattery(Battery battery){ 
+        this.battery = battery; 
+    }    
+
+    public void getBatteryDetails(){
+        this.battery.getDeatils();
     }
 
     @Override
     public void getDetails() {
-        System.out.println("Inverter Model : "+ super.getModel());
-        System.out.println("Inverter Type : "+ super.getType());
-        System.out.println("Inverter OpVolt : "+ super.getOpratingVol());
-        System.out.println("Inverter Current : "+ super.getCurrent());
-        System.out.println("Inverter Solar Panel : Included");
-        System.out.println("Inverter Grid : "+ super.getGridOn());
-        System.out.println("Inverter Power : "+ super.getPower());
+        System.out.println("Inverter Type : "+super.getType());
+        System.out.println("Model : "+super.getModel());
+        System.out.println("Price : "+super.getPrice());
+        System.out.println("Solar Panel included : Yes");
+        System.out.println("Battery Included : Yes");
+        System.out.println("Grid sys: Off");
+        System.out.println("Power Rating : "+super.getPower());
     }
 }
 
 
-class GTI extends SolarInverter{
+class Gti extends SolarInverter{
 
-    public GTI(String model, String type, double operatingVol, double current, SolarPanel solarPanel, String gridOn) {
-        super(model, type, operatingVol, current, solarPanel, "Yes");
+    public Gti(String model, double operatingVol, double current, double price, SolarPanel solarPanel) {
+        super(model, operatingVol, current, price, solarPanel, true);
     }
-    
+
     @Override
     public void getDetails() {
         System.out.println("Inverter Model : "+ super.getModel());
         System.out.println("Inverter Type : "+ super.getType());
-        System.out.println("Inverter OpVolt : "+ super.getOpratingVol());
+        System.out.println("Inverter OpVolt : "+ super.getOperatingVol());
         System.out.println("Inverter Current : "+ super.getCurrent());
-        System.out.println("Inverter Solar Panel : Included");
-        System.out.println("Inverter Grid : "+ super.getGridOn());
+        System.out.println("Solar Panel Included: Yes");
+        System.out.println("Battery Included : No"); 
+        System.out.println("Grid System : On");
         System.out.println("Inverter Power : "+ super.getPower());
     }
 }
 
 class Regalia extends SolarInverter{
 
-    public Regalia(String model, String type, double operatingVol, double current, SolarPanel solarPanel,
-            String gridOn) {
-        super(model, type, operatingVol, current, solarPanel, "NO");
+    
+
+    public Regalia(String model, double operatingVol, double current, double price, SolarPanel solarPanel,
+            boolean gridOn) {
+        super(model, operatingVol, current, price, solarPanel, gridOn);
     }
 
     @Override
     public void getDetails() {
         System.out.println("Inverter Model : "+ super.getModel());
         System.out.println("Inverter Type : "+ super.getType());
-        System.out.println("Inverter OpVolt : "+ super.getOpratingVol());
+        System.out.println("Inverter OpVolt : "+ super.getOperatingVol());
         System.out.println("Inverter Current : "+ super.getCurrent());
         System.out.println("Inverter Solar Panel : Included");
-        System.out.println("Inverter Grid : "+ super.getGridOn());
+        System.out.println("Inverter Grid : "+ super.getGrid());
         System.out.println("Inverter Power : "+ super.getPower());
     }
     
@@ -231,53 +274,57 @@ class Regalia extends SolarInverter{
 
 class Zelio extends SimpleHomeInverter{
 
-    public Zelio(String model, String type, double operatingVol, double current, Battery bat) {
-        super(model, type, operatingVol, current, bat);
+    
+    public Zelio(String model, double operatingVol, double current, double price, Battery battery) {
+        super(model, operatingVol, current, price, battery);
     }
+
     @Override
     public void getDetails() {
         System.out.println("Inverter Model : "+ super.getModel());
         System.out.println("Inverter Type : "+ super.getType());
-        System.out.println("Inverter OpVolt : "+ super.getOpratingVol());
+        System.out.println("Inverter OpVolt : "+ super.getOperatingVol());
         System.out.println("Inverter Current : "+ super.getCurrent());
-        System.out.println("Inverter Battery :" + super.getBattery());
+        System.out.println("Battery Included : Yes");
         System.out.println("Inverter Power : "+ super.getPower());
     }
 }
 
 
-class iCruze extends SimpleHomeInverter{
+class Icruze extends SimpleHomeInverter{
 
-    public iCruze(String model, String type, double operatingVol, double current, Battery bat) {
-        super(model, type, operatingVol, current, bat);
-    }
     
+    
+    public Icruze(String model, double operatingVol, double current, double price, Battery battery) {
+        super(model, operatingVol, current, price, battery);
+    }
+
     @Override
     public void getDetails() {
         System.out.println("Inverter Model : "+ super.getModel());
         System.out.println("Inverter Type : "+ super.getType());
-        System.out.println("Inverter OpVolt : "+ super.getOpratingVol());
+        System.out.println("Inverter OpVolt : "+ super.getOperatingVol());
         System.out.println("Inverter Current : "+ super.getCurrent());
-        System.out.print("Inverter Battery " ); super.getBatteryDetails();
+        System.out.println("Battery Included : Yes");
         System.out.println("Inverter Power : "+ super.getPower());
     }
 }
 
 public class IOTInverter{
     public static void main(String[] args) {
-        Battery bat = new Battery("Battery1234", 500, 300, "Medium");
-        bat.getDeatils();
+        Battery battery = new Battery("Battery1234", 500, 300, "Medium");
+        battery.getDeatils();
         System.out.println();
-        SolarPanel sp = new SolarPanel("Battery3456", "silicon", 400, 500);
-        sp.getDetails();
+        SolarPanel solarPanel = new SolarPanel("Battery3456", "silicon", 400, 500);
+        solarPanel.getDetails();
         System.out.println();
-        Inverter pcu = new PCU("SolarPan1234", "Silicon", 105, 20, sp, "NO", bat);
+        Inverter pcu = new PCU("Inverter637",10,200,5000,solarPanel,battery);
         pcu.getDetails();
         System.out.println();
-        Inverter gti = new GTI("SolarPan657", "magnesium", 80, 30, sp, "Yes");
+        Inverter gti = new Gti("Inverter890", 102, 89, 9000, solarPanel);
         gti.getDetails();
         System.out.println();
-        SimpleHomeInverter shi = new iCruze("Icruze916", "Copper", 350, 10, bat);
-        shi.getDetails();
+        SimpleHomeInverter icraze = new Icruze("HomeInverter12309", 12,220,11000, battery);
+        icraze.getDetails();
     }
 }
