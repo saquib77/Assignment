@@ -194,10 +194,10 @@ abstract class SimpleHomeInverter extends Inverter{
 }
 
 
-class PCU extends SolarInverter{
+class Pcu extends SolarInverter{
     private Battery battery;
 
-    public PCU(String model, double operatingVol, double current, double price, SolarPanel solarPanel,Battery battery) {
+    public Pcu(String model, double operatingVol, double current, double price, SolarPanel solarPanel,Battery battery) {
         super(model, operatingVol, current, price, solarPanel, false);
         this.battery = battery;
     }
@@ -314,7 +314,7 @@ public class IOTInverter{
         SolarPanel solarPanel = new SolarPanel("InverterBattery3456", "silicon", 400, 500);
         solarPanel.getDetails();
         System.out.println();
-        Inverter pcu = new PCU("Inverter637",10,200,5000,solarPanel,battery);
+        Inverter pcu = new Pcu("Inverter637",10,200,5000,solarPanel,battery);
         pcu.getDetails();
         System.out.println();
         Inverter gti = new Gti("Inverter890", 102, 89, 9000, solarPanel);
