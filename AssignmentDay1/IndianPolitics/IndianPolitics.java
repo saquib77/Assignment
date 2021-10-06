@@ -24,9 +24,12 @@ interface Person{
     public abstract void getDetails(); 
 }
 
+interface CarColor{
+    public void rgb();
+}
 
 //Member of Parliament
-class MP extends Person{
+class MP implements Person{
     private String name;
     private int spendingLimit;
     protected MP(String name) {
@@ -46,14 +49,25 @@ class MP extends Person{
     }
 }
 
-
 // Car class
-class Car{
+class Car implements CarColor{
     private String carName;
     private String carColor;
-    public Car(String carName, String carColor) {
+    private int r;
+    private int g;
+    private int b;
+    
+    public Car(String carName, int r, int g, int b) {
         this.carName = carName;
-        this.carColor = carColor;
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        rgb();
+    }
+    public void rgb(){
+        String res="#";
+        res = res + toHex(r) + toHex(g) + toHex(b);
+        this.carColor = res;
     }
     public String getCarName() {
         return this.carName;
@@ -64,11 +78,25 @@ class Car{
     public void getDetails(){
         System.out.println("Car name : "+ carName + "\nCar Color : "+ carColor);
     }
+
+
+    //RGB(x,x,x) to RGB Hex(#ffffff)
+    public String toHex(int num){
+        if(num==0) return "0";
+        StringBuilder sb = new StringBuilder();
+        while(num!=0){
+            int hexDig = num & 0xF;
+            if(hexDig<10) sb.append(hexDig);
+            else sb.append((char)('a'+hexDig-10));
+            num = num >>> 4;
+        }
+        return sb.reverse().toString();
+    }
 }
 
 
 //Driver Class
-class Driver extends Person{
+class Driver implements Person{
     private String name;
     protected Driver(String name) {
         this.name=name;
@@ -125,8 +153,6 @@ class Constituency{
     protected void setMp(MP mp) {
         this.mp = mp;
     }
-
-
     public int getAreaInkm() {
         return this.areaInkm;
     }
@@ -190,7 +216,7 @@ class PM extends Minister{
         System.out.println("Spending Limit :" + this.spendingLimit);
         this.car.getDetails();
         this.cDriver.getDetails();
-        System.out.println();
+        System.out.println("All Cars");
         this.getAllCars();
     }
 }
@@ -204,15 +230,15 @@ public class IndianPolitics{
         con.getDetails();
         System.out.println();
 
-        Minister mn = new Minister("Arvind", new Car("Scorpio", "Black"), new CarDriver("Ram",3));
+        Minister mn = new Minister("Arvind", new Car("Scorpio",12,34,56), new CarDriver("Ram",3));
         mn.getDetails();
         System.out.println();
 
         List<Car> allcar = new ArrayList<>();
-        allcar.add(new Car("Merc Benz", "Black"));
-        allcar.add( new Car("BMWx7", "White"));
-        allcar.add(new Car("RRDark","Mate Black"));
-        PM pm = new PM("Modi", new Car("Merc Benz", "Black"), new CarDriver("Shayam",4), allcar);
+        allcar.add(new Car("Merc Benz", 34,56,78));
+        allcar.add( new Car("BMWx7", 0,0,0));
+        allcar.add(new Car("RRDark",100,100,100));
+        PM pm = new PM("Modi", new Car("Merc Benz",100,100,100), new CarDriver("Shayam",4), allcar);
         pm.getDetails();
     }
 }
