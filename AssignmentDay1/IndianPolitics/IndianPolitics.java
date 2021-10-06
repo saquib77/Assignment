@@ -81,7 +81,7 @@ class Car implements CarColor{
 
 
     //RGB(x,x,x) to RGB Hex(#ffffff)
-    public String toHex(int num){
+    private String toHex(int num){
         if(num==0) return "0";
         StringBuilder sb = new StringBuilder();
         while(num!=0){
@@ -236,7 +236,7 @@ public class IndianPolitics{
 
         List<Car> allcar = new ArrayList<>();
         allcar.add(new Car("Merc Benz", 34,56,78));
-        allcar.add( new Car("BMWx7", 0,0,0));
+        allcar.add( new Car("BMWx7", 144, 132, 137));
         allcar.add(new Car("RRDark",100,100,100));
         PM pm = new PM("Modi", new Car("Merc Benz",100,100,100), new CarDriver("Shayam",4), allcar);
         pm.getDetails();
