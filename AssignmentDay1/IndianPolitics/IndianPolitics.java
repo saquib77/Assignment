@@ -29,10 +29,10 @@ interface CarColor{
 }
 
 //Member of Parliament
-class MP implements Person{
+class Mp implements Person{
     private String name;
     private int spendingLimit;
-    protected MP(String name) {
+    protected Mp(String name) {
         this.name = name;
         this.spendingLimit = 50000;
     }
@@ -138,8 +138,8 @@ class CarDriver extends Driver{
 class Constituency{
     private String name;
     private int areaInkm;
-    private MP mp;
-    protected Constituency(String name, int areaInkm, MP mp) {
+    private Mp mp;
+    protected Constituency(String name, int areaInkm, Mp mp) {
         this.name = name;
         this.areaInkm = areaInkm;
         this.mp = mp;
@@ -150,7 +150,7 @@ class Constituency{
     protected void setAreaInkm(int areaInkm) {
         this.areaInkm = areaInkm;
     }
-    protected void setMp(MP mp) {
+    protected void setMp(Mp mp) {
         this.mp = mp;
     }
     public int getAreaInkm() {
@@ -159,7 +159,7 @@ class Constituency{
     public String getName() {
         return this.name;
     }
-    public MP getMp() {
+    public Mp getMp() {
         return this.mp;
     }
     public void getDetails(){
@@ -170,7 +170,7 @@ class Constituency{
 
 
 // Minister Class
-class Minister extends MP{
+class Minister extends Mp{
     private Car car;
     private CarDriver cDriver;
     private int spendingLimit;
@@ -192,12 +192,12 @@ class Minister extends MP{
 
 
 //Prime Minister Class
-class PM extends Minister{
+class Pm extends Minister{
     private List<Car> cars = new ArrayList<>(5);
     private Car car;
     private CarDriver cDriver;
     private int spendingLimit;
-    public PM(String name, Car car, CarDriver cDriver, List<Car> cars) {
+    public Pm(String name, Car car, CarDriver cDriver, List<Car> cars) {
         super(name, car, cDriver);
         this.cars = cars;
         this.car = car;
@@ -226,7 +226,7 @@ class PM extends Minister{
 public class IndianPolitics{
     public static void main(String[] args) {
         System.out.println("\n");
-        Constituency con = new Constituency("Delhi", 500, new MP("Kejriwal"));
+        Constituency con = new Constituency("Delhi", 500, new Mp("Kejriwal"));
         con.getDetails();
         System.out.println();
 
@@ -238,7 +238,7 @@ public class IndianPolitics{
         allcar.add(new Car("Merc Benz", 34,56,78));
         allcar.add( new Car("BMWx7", 144, 132, 137));
         allcar.add(new Car("RRDark",100,100,100));
-        PM pm = new PM("Modi", new Car("Merc Benz",100,100,100), new CarDriver("Shayam",4), allcar);
+        Pm pm = new Pm("Modi", new Car("Merc Benz",100,100,100), new CarDriver("Shayam",4), allcar);
         pm.getDetails();
     }
 }

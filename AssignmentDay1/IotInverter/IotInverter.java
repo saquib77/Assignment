@@ -289,8 +289,6 @@ class Zelio extends SimpleHomeInverter{
 
 class Icruze extends SimpleHomeInverter{
 
-    
-    
     public Icruze(String model, double operatingVol, double current, double price, Battery battery) {
         super(model, operatingVol, current, price, battery);
     }
@@ -306,7 +304,7 @@ class Icruze extends SimpleHomeInverter{
     }
 }
 
-public class IOTInverter{
+public class IotInverter{
     public static void main(String[] args) {
         Battery battery = new Battery("CommercialInv3456", 500, 300, "Medium");
         battery.getDeatils();

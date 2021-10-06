@@ -1,0 +1,17 @@
+Dependency Injection
+Inversion of Control
+p schema
+c schema
+collection injection
+refrence injection
+bean life cycle
+@PostConstruct and @PreDestroy
+Autowiring
+Autowiring Xml
+@Qualifiers
+Standalone 
+stereotype
+@Component
+@Value
+SpEL
+
