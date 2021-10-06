@@ -19,39 +19,29 @@ import java.util.*;
 
 
 // Person Name 
-abstract class Person{
-    private String name;
-
-    protected Person(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    protected void setName(String name) {
-        this.name = name;
-    }
-
-
+interface Person{
+    public String getName();
     public abstract void getDetails(); 
 }
 
 
 //Member of Parliament
 class MP extends Person{
+    private String name;
     private int spendingLimit;
     protected MP(String name) {
-        super(name);
+        this.name = name;
         this.spendingLimit = 50000;
+    }
+    public String getName() {
+        return this.name;
     }
     public int getSpendingLimit() {
         return spendingLimit;
     }
     @Override
     public void getDetails() {
-        System.out.println("MP Name :"+ super.getName());
+        System.out.println("MP Name :"+ this.name);
         System.out.println("Spending Limit :" + this.spendingLimit);
     }
 }
@@ -79,12 +69,16 @@ class Car{
 
 //Driver Class
 class Driver extends Person{
+    private String name;
     protected Driver(String name) {
-        super(name);
+        this.name=name;
+    }
+    public String getName() {
+        return this.name;
     }
     @Override
     public void getDetails() {
-        System.out.println("Driver Name :" + super.getName());
+        System.out.println("Driver Name :" + this.name);
     }
 }
 
@@ -121,6 +115,26 @@ class Constituency{
         this.name = name;
         this.areaInkm = areaInkm;
         this.mp = mp;
+    }
+    protected void setName(String name) {
+        this.name = name;
+    }
+    protected void setAreaInkm(int areaInkm) {
+        this.areaInkm = areaInkm;
+    }
+    protected void setMp(MP mp) {
+        this.mp = mp;
+    }
+
+
+    public int getAreaInkm() {
+        return this.areaInkm;
+    }
+    public String getName() {
+        return this.name;
+    }
+    public MP getMp() {
+        return this.mp;
     }
     public void getDetails(){
         System.out.println("Constituency Name : " + name + "\nArea(KM) : "+ areaInkm);
