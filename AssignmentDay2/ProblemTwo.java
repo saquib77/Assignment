@@ -37,7 +37,7 @@ public class ProblemTwo {
     }
     
     public static void main(String[] args) {
-        int[] list = new int[]{4,1,2,3};
+        int[] list = new int[]{11,45,12,6,7,1,9};
         boolean res = StackSortableOrNot(list, list.length);
         System.out.println(res);
     }
