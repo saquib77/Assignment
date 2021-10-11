@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/beans/context
+        http://www.springframework.org/schema/beans/context/spring-context.xsd">
+	
+	<!-- this is bean  -->
+	
+	<bean name="student1" class="com.springcore_collections.Student">
+		<property name="studentName" value="Saquib"/>
+		
+		<property name="books">
+			<list>
+				<value>CinDepth</value>
+				<value>DataStructure</value>
+			</list>
+		</property>
+		
+		<property name="courses">
+			<set>
+				<value>fullstack</value>
+				<value>cp</value>
+				<value>datastructure</value>
+			</set>
+		</property>
+		<property name="coursesCom">
+			<map>
+				<entry key="java" value="2mn" />
+				<entry key="python" value="1mn"/>
+			</map>
+			
+		</property>
+	</bean>
+
+</beans>
